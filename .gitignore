@@ -1,0 +1,43 @@
+# Dependency directories
+node_modules/
+
+# Build artifacts
+dist/
+dist-ssr/
+build/
+frontend/dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+backend/.env
+backend/keys.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+backend/uploads/*
+!backend/uploads/.gitkeep
+frontend/playwright-report/
+frontend/test-results/
+
+# Prisma
+# Generally you WANT to track migrations, but ignore the SQLite db if used
+*.db
+*.db-journal
