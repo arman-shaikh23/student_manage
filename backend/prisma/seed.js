@@ -6,12 +6,17 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Seeding database...');
 
+  // Check if already seeded
+  const existingAdmin = await prisma.user.findUnique({ where: { email: 'admin@system.com' } });
+  if (existingAdmin) {
+    console.log('Database is already seeded. Skipping...');
+    return;
+  }
+
   // 1. Create Roles & Admin
   const hashedPassword = await bcrypt.hash('admin123', 10);
-  const admin = await prisma.user.upsert({
-    where: { email: 'admin@system.com' },
-    update: {},
-    create: {
+  const admin = await prisma.user.create({
+    data: {
       email: 'admin@system.com',
       password: hashedPassword,
       role: 'ADMIN',
