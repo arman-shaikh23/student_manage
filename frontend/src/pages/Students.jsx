@@ -11,7 +11,7 @@ import {
 } from 'react-icons/md';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
 import { exportToPDF } from '../utils/exportPDF';
 import StudentModal from '../components/StudentModal';
 import { AuthContext } from '../context/AuthContext';
@@ -235,7 +235,7 @@ const Students = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         {student.profileImage ? (
-                          <img src={`http://localhost:5000${student.profileImage}`} alt={student.firstName} className="w-8 h-8 rounded-full object-cover border border-border" />
+                          <img src={`${BASE_URL}${student.profileImage}`} alt={student.firstName} className="w-8 h-8 rounded-full object-cover border border-border" />
                         ) : (
                           <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs border border-primary/20">
                             {student.firstName.charAt(0)}{student.lastName.charAt(0)}

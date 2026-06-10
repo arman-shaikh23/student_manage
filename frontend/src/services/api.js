@@ -8,8 +8,10 @@ export const setToken = (token) => {
 
 export const getToken = () => accessToken;
 
+export const BASE_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api$/, '') : 'http://localhost:5000';
+
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   withCredentials: true, // Necessary to send/receive httpOnly cookies for refresh token
 });
 
@@ -41,7 +43,7 @@ api.interceptors.response.use(
       
       try {
         // Attempt to silently refresh the access token via the httpOnly cookie
-        const res = await axios.get('http://localhost:5000/api/auth/refresh', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/refresh`, {
           withCredentials: true,
         });
 

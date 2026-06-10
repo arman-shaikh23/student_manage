@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { MdAdd, MdEdit, MdDelete, MdSearch } from 'react-icons/md';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../context/AuthContext';
 import FacultyModal from '../components/FacultyModal';
@@ -175,7 +175,7 @@ const Faculty = () => {
                       <div className="flex items-center">
                         <div className="h-10 w-10 flex-shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
                           {faculty.profileImage ? (
-                            <img src={`http://localhost:5000${faculty.profileImage}`} className="h-10 w-10 rounded-full object-cover" />
+                            <img src={`${BASE_URL}${faculty.profileImage}`} className="h-10 w-10 rounded-full object-cover" />
                           ) : (
                             faculty.firstName.charAt(0)
                           )}

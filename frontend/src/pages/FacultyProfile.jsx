@@ -10,7 +10,7 @@ import {
   MdBook,
   MdBadge
 } from 'react-icons/md';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 
 const FacultyProfile = () => {
@@ -70,7 +70,7 @@ const FacultyProfile = () => {
           <div className="relative w-32 h-32 mb-4">
             {faculty.profileImage ? (
               <img 
-                src={`http://localhost:5000${faculty.profileImage}`} 
+                src={`${BASE_URL}${faculty.profileImage}`} 
                 alt={`${faculty.firstName} ${faculty.lastName}`} 
                 className="w-full h-full rounded-full object-cover border-4 border-background shadow-lg"
               />

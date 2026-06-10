@@ -13,7 +13,7 @@ import {
   MdAttachMoney,
   MdFamilyRestroom
 } from 'react-icons/md';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
 
 const StudentProfile = () => {
   const { id } = useParams();
@@ -78,7 +78,7 @@ const StudentProfile = () => {
           <div className="relative w-32 h-32 mb-4">
             {student.profileImage ? (
               <img 
-                src={`http://localhost:5000${student.profileImage}`} 
+                src={`${BASE_URL}${student.profileImage}`} 
                 alt={`${student.firstName} ${student.lastName}`} 
                 className="w-full h-full rounded-full object-cover border-4 border-background shadow-lg"
               />
