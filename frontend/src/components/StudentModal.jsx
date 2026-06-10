@@ -39,8 +39,8 @@ const StudentModal = ({ isOpen, onClose, onSubmit, student, courses }) => {
         if (res.data.success) {
           setSemesters(res.data.data);
           // Auto select first semester if current is invalid
-          if (!res.data.data.find(s => s.id === parseInt(formData.semesterId))) {
-             setFormData(prev => ({ ...prev, semesterId: res.data.data[0]?.id || '' }));
+          if (!res.data.data.find(s => s.id.toString() === formData.semesterId.toString())) {
+             setFormData(prev => ({ ...prev, semesterId: res.data.data[0]?.id.toString() || '' }));
           }
         }
       } catch (error) {

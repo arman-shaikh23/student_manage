@@ -1,11 +1,129 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MdAdd, MdEdit, MdDelete, MdClose, MdAssessment, MdDownload } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import api from '../services/api';
 import { exportToPDF } from '../utils/exportPDF';
+import { AuthContext } from '../context/AuthContext';
+
+const calculateGrade = (obtained, total) => {
+  const percentage = (obtained / total) * 100;
+  if (percentage >= 90) return 'A+';
+  if (percentage >= 80) return 'A';
+  if (percentage >= 70) return 'B+';
+  if (percentage >= 60) return 'B';
+  if (percentage >= 50) return 'C';
+  if (percentage >= 40) return 'D';
+  return 'F';
+};
+
+const getGradeColor = (grade) => {
+  switch (grade) {
+    case 'A+': case 'A': return 'bg-green-500/10 text-green-500 border-green-500/20';
+    case 'B+': case 'B': return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+    case 'C': return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
+    case 'D': return 'bg-orange-500/10 text-orange-500 border-orange-500/20';
+    default: return 'bg-red-500/10 text-red-500 border-red-500/20';
+  }
+};
+
+const StudentMarksView = () => {
+  const [marks, setMarks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMyMarks = async () => {
+      try {
+        const res = await api.get('/marks');
+        if (res.data.success) {
+          setMarks(res.data.data);
+        }
+      } catch (error) {
+        toast.error('Failed to load your marks');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMyMarks();
+  }, []);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">My Marks</h1>
+          <p className="text-muted-foreground text-sm mt-1">View your academic performance across subjects.</p>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[...Array(3)].map((_, i) => <div key={i} className="h-32 bg-card animate-pulse rounded-xl"></div>)}
+        </div>
+      ) : marks.length === 0 ? (
+        <div className="glass bg-card rounded-2xl p-12 text-center border border-border">
+          <MdAssessment size={48} className="mx-auto text-muted-foreground mb-4 opacity-50" />
+          <h3 className="text-lg font-medium text-foreground">No Marks Available</h3>
+          <p className="text-muted-foreground text-sm mt-1">Your marks will appear here once published by faculty.</p>
+        </div>
+      ) : (
+        <div className="glass bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+          <div className="overflow-x-auto max-h-[500px] custom-scrollbar">
+            <table className="w-full text-left text-sm text-muted-foreground relative">
+              <thead className="bg-muted/50 text-xs uppercase text-foreground sticky top-0 z-10 shadow-sm backdrop-blur-md">
+                <tr>
+                  <th className="px-6 py-4 font-semibold tracking-wider">Subject</th>
+                  <th className="px-6 py-4 font-semibold tracking-wider">Date</th>
+                  <th className="px-6 py-4 font-semibold tracking-wider">Internal + External</th>
+                  <th className="px-6 py-4 font-semibold tracking-wider">Percentage</th>
+                  <th className="px-6 py-4 font-semibold tracking-wider text-right">Grade</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {marks.map((mark) => {
+                  const totalScored = (mark.internalMarks || 0) + (mark.externalMarks || 0);
+                  const percentage = ((totalScored / mark.totalMarks) * 100).toFixed(1);
+                  const grade = calculateGrade(totalScored, mark.totalMarks);
+
+                  return (
+                    <motion.tr 
+                      key={mark.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="hover:bg-muted/30 transition-colors"
+                    >
+                      <td className="px-6 py-4 font-medium text-foreground">{mark.subject?.name}</td>
+                      <td className="px-6 py-4">{new Date(mark.examDate).toLocaleDateString()}</td>
+                      <td className="px-6 py-4 font-medium">
+                        <span className="text-blue-500">{mark.internalMarks || 0}</span> + <span className="text-orange-500">{mark.externalMarks || 0}</span> = {totalScored} <span className="text-muted-foreground font-normal">/ {mark.totalMarks}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
+                            <div className="h-full bg-primary" style={{ width: `${percentage}%` }}></div>
+                          </div>
+                          <span className="text-xs font-medium">{percentage}%</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border ${getGradeColor(grade)}`}>
+                          {grade}
+                        </span>
+                      </td>
+                    </motion.tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Marks = () => {
+  const { user } = useContext(AuthContext);
   const [courses, setCourses] = useState([]);
   const [semesters, setSemesters] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -155,27 +273,6 @@ const Marks = () => {
     }
   };
 
-  const calculateGrade = (obtained, total) => {
-    const percentage = (obtained / total) * 100;
-    if (percentage >= 90) return 'A+';
-    if (percentage >= 80) return 'A';
-    if (percentage >= 70) return 'B+';
-    if (percentage >= 60) return 'B';
-    if (percentage >= 50) return 'C';
-    if (percentage >= 40) return 'D';
-    return 'F';
-  };
-
-  const getGradeColor = (grade) => {
-    switch (grade) {
-      case 'A+': case 'A': return 'bg-green-500/10 text-green-500 border-green-500/20';
-      case 'B+': case 'B': return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
-      case 'C': return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
-      case 'D': return 'bg-orange-500/10 text-orange-500 border-orange-500/20';
-      default: return 'bg-red-500/10 text-red-500 border-red-500/20';
-    }
-  };
-
   const handleExportPDF = () => {
     const dataToExport = marks.map(m => {
       const totalScored = (m.internalMarks || 0) + (m.externalMarks || 0);
@@ -203,6 +300,10 @@ const Marks = () => {
     
     exportToPDF(dataToExport, columns, 'Academic Marks Report', 'marks_report');
   };
+
+  if (user?.role === 'STUDENT') {
+    return <StudentMarksView />;
+  }
 
   return (
     <div className="space-y-6">

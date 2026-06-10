@@ -34,3 +34,7 @@ Here are some useful prompts you can give me to further manage, expand, or debug
 ### 7. Testing & Quality Assurance
 - "How do I run the Vitest and Playwright test suites together in a CI pipeline?"
 - "Add an integration test to `marks.test.js` to ensure students can only view their own marks."
+
+### 8. Historical User Requests
+- "Implement strict role-based filtering so that when a Faculty logs in, the dropdowns for Courses, Semesters, and Subjects automatically filter to only show the subjects they are explicitly assigned to teach."
+- "Ensure that when a Student logs in, they can only view the subjects related to their currently enrolled Course and Semester, and restrict them from accessing administrative actions like 'Add Marks'."

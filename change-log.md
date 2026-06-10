@@ -39,3 +39,6 @@ All notable changes to the Student Management System will be documented in this 
 ### Fixed
 - Fixed an issue where Students could see all subjects across all semesters for their course instead of just their current semester.
 - Fixed an issue where Faculty could see and mark attendance for subjects they do not teach.
+- **Student Data Alignment Bug**: Resolved a critical database issue where Students were being assigned to incorrect `semesterId`s that didn't match their enrolled `courseId`, preventing them from appearing in Faculty Attendance and Marks rosters.
+- **UI Semester Dropdown Bug**: Fixed a bug in `StudentModal.jsx` where dynamically changing the Course selection caused the `semesterId` state to silently default to a mismatched ID.
+- **Marks Page Access for Students**: Resolved a `403 Forbidden` error that occurred when Students accessed the Marks page. Students now have a dedicated, read-only `StudentMarksView` and can no longer see the "Add Marks" button.
