@@ -1,3 +1,2 @@
 [deploy]
 startCommand = "npm start"
-releaseCommand = "cd backend && npx prisma migrate deploy && npx prisma db seed"
