@@ -22,8 +22,8 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       "default-src": ["'self'"],
-      "script-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-      "style-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
+      "script-src": ["'self'", "'unsafe-inline'"],
+      "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       "img-src": ["'self'", "data:", "https://validator.swagger.io"],
       "font-src": ["'self'", "https://fonts.gstatic.com"],
     },
