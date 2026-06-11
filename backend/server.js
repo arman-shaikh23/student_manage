@@ -21,11 +21,11 @@ app.use((req, res, next) => {
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:", "https://validator.swagger.io"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      "default-src": ["'self'"],
+      "script-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
+      "style-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
+      "img-src": ["'self'", "data:", "https://validator.swagger.io"],
+      "font-src": ["'self'", "https://fonts.gstatic.com"],
     },
   },
 }));
