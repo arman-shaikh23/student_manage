@@ -16,6 +16,7 @@ Here are some useful prompts you can give me to further manage, expand, or debug
 - "Add a 'Forgot Password' flow using Nodemailer to send a password reset link to the admin's email."
 - "Implement pagination for the Attendance and Marks API endpoints to handle thousands of records efficiently."
 - "Add an endpoint that generates a CSV export of all students instead of PDF, and hook it up to a new 'Export CSV' button on the frontend."
+- "Extend the Swagger API documentation to cover the Fees and Academics modules comprehensively."
 
 ### 4. Deployment & DevOps
 - "Write a Dockerfile for the frontend and backend, and update the docker-compose.yml to run the full stack."

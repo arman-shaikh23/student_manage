@@ -12,6 +12,115 @@ const { protect, authorize } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Students
+ *   description: Student management endpoints
+ */
+
+/**
+ * @swagger
+ * /api/students:
+ *   get:
+ *     summary: Retrieve a list of students
+ *     tags: [Students]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of students
+ *   post:
+ *     summary: Create a new student
+ *     tags: [Students]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               studentId:
+ *                 type: string
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *               dob:
+ *                 type: string
+ *                 format: date
+ *               address:
+ *                 type: string
+ *               city:
+ *                 type: string
+ *               state:
+ *                 type: string
+ *               courseId:
+ *                 type: integer
+ *               semesterId:
+ *                 type: integer
+ *               profileImage:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       201:
+ *         description: Student created successfully
+ */
+
+/**
+ * @swagger
+ * /api/students/{id}:
+ *   get:
+ *     summary: Get a student by ID
+ *     tags: [Students]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Student data
+ *   put:
+ *     summary: Update a student
+ *     tags: [Students]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Student updated successfully
+ *   delete:
+ *     summary: Delete a student
+ *     tags: [Students]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Student deleted successfully
+ */
 router.use(protect); // Protect all student routes
 
 const dobValidator = (value) => {

@@ -11,6 +11,98 @@ const { protect, authorize } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Courses
+ *   description: Course management endpoints
+ */
+
+/**
+ * @swagger
+ * /api/courses:
+ *   get:
+ *     summary: Retrieve a list of courses
+ *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of courses
+ *   post:
+ *     summary: Create a new course
+ *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               courseName:
+ *                 type: string
+ *               courseCode:
+ *                 type: string
+ *               duration:
+ *                 type: string
+ *               instructor:
+ *                 type: string
+ *               fee:
+ *                 type: number
+ *     responses:
+ *       201:
+ *         description: Course created successfully
+ */
+
+/**
+ * @swagger
+ * /api/courses/{id}:
+ *   get:
+ *     summary: Get a course by ID
+ *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Course details
+ *   put:
+ *     summary: Update a course
+ *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Course updated successfully
+ *   delete:
+ *     summary: Delete a course
+ *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Course deleted successfully
+ */
+
 router.use(protect); // Protect all course routes
 
 router

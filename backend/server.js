@@ -70,6 +70,9 @@ app.use('/api/academics', academicRoutes);
 app.use('/api/fees', feeRoutes);
 app.use('/api/faculty', facultyRoutes);
 
+const setupSwagger = require('./swagger');
+setupSwagger(app);
+
 // Base route
 app.get('/', (req, res) => {
   res.send('Student Management System API is running');

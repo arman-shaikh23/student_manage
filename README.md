@@ -34,6 +34,7 @@ A production-ready, full-stack Student Management System featuring a modern SaaS
 - **JWT & bcrypt** (Security)
 - **Multer** (File Uploads)
 - **Express Validator** (Input validation)
+- **Swagger** (API Documentation)
 - **Helmet, CORS, express-rate-limit** (API Security)
 - **Supertest** (API Integration Testing)
 

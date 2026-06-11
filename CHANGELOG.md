@@ -4,6 +4,12 @@ All notable changes to the Student Management System will be documented in this 
 
 ## [Unreleased] - Recent Updates
 
+### API Documentation
+- **Swagger UI Integration**: Added `swagger-ui-express` and `swagger-jsdoc` to automatically serve interactive API documentation at `/api-docs`.
+- **Route Annotations**: Added Swagger JSDoc comments to major route files including Auth, Students, and Courses for clear request/response specifications.
+
+### Security Updates
+- Verified and ensured all necessary security packages (`helmet`, `cors`, `express-rate-limit`) are present and correctly configured.
 ### Security & Bug Fixes
 - **Token Revocation Gap Fixed**: Access tokens now include a `tokenVersion` which is validated against the database in the `protect` middleware, ensuring revoked tokens are invalidated immediately.
 - **In-Memory Token Storage**: Moved the JWT Access Token out of `localStorage` and into an in-memory JS variable, significantly reducing the risk of XSS attacks. The app now relies on the `httpOnly` Refresh Cookie to retrieve it seamlessly on page load.
